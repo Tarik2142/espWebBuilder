@@ -1,0 +1,7 @@
+.context-menu { 
+  position: absolute; 
+  text-align: center; 
+  border: none;
+  width: auto;
+  height: auto;
+}

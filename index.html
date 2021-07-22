@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title id="titleLabel">espWebBuilder</title>
+  <link rel="stylesheet" href="./css/materialize.min.css" />
+  <link rel="stylesheet" href="./css/custom.css">
+  <link rel="stylesheet" href="./css/tarik-utils.css">
+  <link rel="stylesheet" href="./css/material-icons.css">
+  <link rel="stylesheet" href="./css/context-menu.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" name="viewport">
+</head>
+
+<div id="loader" class="load-finish">
+  <div class="container">
+    <div class="progress">
+      <div class="indeterminate"></div>
+    </div>
+  </div>
+</div>
+
+<div class="navbar-fixed">
+  <nav class="nav-extended blue-grey darken-2">
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo"><span id="builderIcon" class="material-icons">
+          developer_board
+        </span>EspWebBuilder Alpha</a>
+      <ul class="right">
+        <li><a class="waves-effect waves-light btn" onclick="generateCode()">Generate Code<i
+              class="material-icons right">code</i></a></li>
+        <li><a class="waves-effect waves-light btn" onclick="openProjectConf()"><i class="material-icons">build</i></a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+<div id="projectConfModal" class="modal blue-grey">
+  <div class="modal-content">
+    <div class="row">
+      <h4 class="col s12">Project Config</h4>
+      <p class="col s6">Enable Container</p>
+      <p class="col s6">
+        <label>
+          <input id="containerCheckbox" type="checkbox" />
+          <span></span>
+        </label>
+      </p>
+
+      <p class="col s6">Center all elements</p>
+      <p class="col s6">
+        <label>
+          <input id="centerAllCheckbox" type="checkbox" />
+          <span></span>
+        </label>
+      </p>
+    </div>
+  </div>
+  <div class="modal-footer blue-grey darken-2">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat" onclick="applyProjectConfig()">OK</a>
+  </div>
+</div>
+
+<div id="addElemModal" class="modal blue-grey">
+  <div class="modal-content">
+    <div id="addElemModalContainer" class="row">
+
+    </div>
+  </div>
+  <div id="addElemModalHelp" class="modal-footer blue-grey darken-2">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat" onclick="addElement(this.id)">OK</a>
+  </div>
+</div>
+
+<div id="elementPropModal" class="modal blue-grey">
+  <div class="modal-content">
+    <div class="row">
+      <h4 class="col s12">Element properties</h4>
+    </div>
+  </div>
+  <div class="modal-footer blue-grey darken-2">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat" onclick="applyProp()">OK</a>
+  </div>
+</div>
+
+<div id="htmlEditModal" class="modal blue-grey">
+  <div class="modal-content">
+    <div class="row">
+      <h4 class="col s12">Element HTML</h4>
+      <div id="elemHtmlEditor" class="col s12 htmlEditor"></div>
+    </div>
+  </div>
+  <div class="modal-footer blue-grey darken-2">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat" onclick="applyHtml()">OK</a>
+  </div>
+</div>
+
+<div id="codeGeneretorModal" class="modal blue-grey">
+  <div class="modal-content">
+    <div class="row">
+      <h4 class="col s12">HTML code:</h4>
+      <div id="codeGeneretorModalEditor" class="col s12 htmlEditor"></div>
+    </div>
+  </div>
+  <div class="modal-footer blue-grey darken-2">
+    <a href="#!" class="modal-close waves-effect waves-green btn-flat" onclick="">OK</a>
+  </div>
+</div>
+
+<div id="contextMenu" class="context-menu" style="display:none">
+  <div class="collection z-depth-3">
+    <a id="contextMenuElId" href="#!" class="collection-item"></a>
+    <a href="#!" class="collection-item">Edit Prop</a>
+    <a href="#!" class="collection-item" onclick="editHtml()">Edit HTML</a>
+    <a href="#!" class="collection-item" onclick="removeElement()">Remove</a>
+  </div>
+</div>
+
+<body class="body blue-grey darken-2">
+
+  <div id="interface-container" class="grid">
+
+    <div id="left-panel" class="left-panel">
+      <ul class="tabs blue-grey">
+        <li class="tab col s3"><a class="active" href="#addElemCollection"><span class="material-icons">
+              add
+            </span></a></li>
+        <li class="tab col s3"><a href="#elemListCollection"><span class="material-icons">
+              list
+            </span></a></li>
+      </ul>
+      <div id="addElemCollection" class="col s12">
+        <div class="collection">
+          <a id="div" href="#!" onclick="elemSetupBuilder(this.id)" class="collection-item">
+            {dіv}
+          </a>
+          <a id="Text" href="#!" onclick="elemSetupBuilder(this.id)" class="collection-item">Text</a>
+          <a id="TextInput" href="#!" onclick="elemSetupBuilder(this.id)" class="collection-item">Text Input</a>
+          <a id="Button" href="#!" onclick="elemSetupBuilder(this.id)" class="collection-item">Button</a>
+          <a id="Checkbox" href="#!" onclick="elemSetupBuilder(this.id)" class="collection-item">Checkbox</a>
+          <a id="Switch" href="#!" onclick="elemSetupBuilder(this.id)" class="collection-item">Switch</a>
+        </div>
+      </div>
+      <div id="elemListCollection" class="col s12">
+        <div id="elemListCollectionContainer" class="collection"></div>
+      </div>
+    </div>
+
+    <div id="developContainer" class="main-content z-depth-2 blue-grey darken-1">
+      <div id="enableContainerDiv">
+        <div id="insideDevelopContainer" class="row">
+        </div>
+      </div>
+    </div>
+
+    <div class="right-panel z-depth-2 blue-grey darken-1">
+      <div class="row actionList center">
+        <div id="selectedEl" class="col s12">Selected: none</div>
+        <a class="waves-effect waves-light btn col s3" onclick="editHtml()"><i class="material-icons">edit</i></a>
+        <a class="waves-effect waves-light btn col s3" onclick="move(1)"><i class="material-icons">expand_less</i></a>
+        <a class="waves-effect waves-light btn col s3" onclick="move()"><i class="material-icons">expand_more</i></a>
+      </div>
+    </div>
+
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.3.3/ace.js" type="text/javascript" charset="utf-8"></script>
+  <script src="./js/FileSaver.js"></script>
+  <script src="./js/jquery-3.4.1.min.js"></script>
+  <script src="./js/MoveUpDownFunctions.js"></script>
+  <script src="./js/materialize.min.js"></script>
+  <script src="./js/tarik-utils.js"></script>
+  <script src="./js/custom.js"></script>
+</body>
+
+</html>
